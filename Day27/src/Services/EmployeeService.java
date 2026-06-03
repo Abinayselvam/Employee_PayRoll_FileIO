@@ -1,5 +1,6 @@
 package Services;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import Entities.Employee;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class EmployeeService {
        employees.forEach(System.out::println);
     }
 
+
     public void writeToFile()
 
             throws IOException {
@@ -39,7 +41,7 @@ public class EmployeeService {
                         "EmployeeData/payroll.txt"
                 );
 
-        for(EmployeePayroll emp
+        for (EmployeePayroll emp
                 : employees) {
 
             writer.write(
@@ -53,6 +55,36 @@ public class EmployeeService {
         }
 
         writer.close();
+    }
+
+    public void printData()
+
+            throws Exception {
+
+        Files.lines(
+
+                        Paths.get(
+                                "EmployeeData/payroll.txt"
+                        )
+                )
+
+                .forEach(
+                        System.out::println
+                );
+    }
+    public long countEntries()
+
+            throws Exception {
+
+        return Files.lines(
+
+                        Paths.get(
+                                "EmployeeData/payroll.txt"
+                        )
+                )
+
+                .count();
+
     }
 
 }

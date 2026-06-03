@@ -1,8 +1,8 @@
-package  Services;
+package Services;
+
 import java.nio.file.*;
 
-public class EmployeePayrollWatcherService {
-
+public class EmployeePayRollWatcherService {
     public static void main(String[] args)
 
             throws Exception {
@@ -58,4 +58,5 @@ public class EmployeePayrollWatcherService {
             key.reset();
         }
     }
+
 }
