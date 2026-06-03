@@ -26,5 +26,33 @@ public class EmployeeService {
        System.out.println("Employee PayRoll data:");
        employees.forEach(System.out::println);
     }
+    public void readFile()
+
+            throws Exception {
+
+        Files.lines(
+
+                        Paths.get(
+                                "EmployeeData/payroll.txt"
+                        )
+                )
+
+                .map(
+
+                        line -> line.split("\\|")
+                )
+
+                .forEach(
+
+                        data -> System.out.println(
+
+                                "Name : "
+
+                                        +
+
+                                        data[1]
+                        )
+                );
+    }
 
 }
