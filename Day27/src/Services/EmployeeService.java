@@ -1,5 +1,6 @@
 package Services;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import Entities.Employee;
 
 import java.util.ArrayList;
@@ -25,6 +26,35 @@ public class EmployeeService {
     {
        System.out.println("Employee PayRoll data:");
        employees.forEach(System.out::println);
+    }
+
+    public void printData()
+
+            throws Exception {
+
+        Files.lines(
+
+                        Paths.get(
+                                "EmployeeData/payroll.txt"
+                        )
+                )
+
+                .forEach(
+                        System.out::println
+                );
+    }
+    public long countEntries()
+
+            throws Exception {
+
+        return Files.lines(
+
+                        Paths.get(
+                                "EmployeeData/payroll.txt"
+                        )
+                )
+
+                .count();
     }
 
 }
