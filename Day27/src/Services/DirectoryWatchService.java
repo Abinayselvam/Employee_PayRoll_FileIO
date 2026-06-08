@@ -1,11 +1,14 @@
 package Services;
-
+import java.io.IOException;
 import java.nio.file.*;
 
-public class EmployeePayRollWatcherService {
-    public static void main(String[] args)
+public class DirectoryWatchService {
 
-            throws Exception {
+    public void watchDirectory(
+            String path)
+
+            throws IOException,
+            InterruptedException {
 
         WatchService watchService =
 
@@ -13,12 +16,10 @@ public class EmployeePayRollWatcherService {
                         .getDefault()
                         .newWatchService();
 
-        Path path =
-                Paths.get(
-                        "EmployeeData"
-                );
+        Path dir =
+                Paths.get(path);
 
-        path.register(
+        dir.register(
 
                 watchService,
 
@@ -26,11 +27,10 @@ public class EmployeePayRollWatcherService {
                         .ENTRY_CREATE,
 
                 StandardWatchEventKinds
-                        .ENTRY_DELETE
-        );
+                        .ENTRY_DELETE,
 
-        System.out.println(
-                "Watching Directory..."
+                StandardWatchEventKinds
+                        .ENTRY_MODIFY
         );
 
         while(true) {
@@ -44,13 +44,9 @@ public class EmployeePayRollWatcherService {
                 System.out.println(
 
                         event.kind()
-
                                 +
-
                                 " : "
-
                                 +
-
                                 event.context()
                 );
             }
@@ -58,5 +54,4 @@ public class EmployeePayRollWatcherService {
             key.reset();
         }
     }
-
 }

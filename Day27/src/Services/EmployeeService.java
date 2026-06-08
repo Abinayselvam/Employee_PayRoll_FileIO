@@ -4,115 +4,80 @@ import java.nio.file.Paths;
 import Entities.Employee;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class EmployeeService {
-    ArrayList<Employee> employees=new ArrayList<>();
-    public void readEmployeeData()
-    {
-        Scanner sc=new Scanner(System.in);
-        System.out.println("Enter the ID:");
-        int id=sc.nextInt();
-        sc.nextLine();
-        System.out.println("Enter name:");
-        String name=sc.nextLine();
-        System.out.println("Enter the salary:");
-        double salary=sc.nextDouble();
-        Employee employee=new Employee(id,name,salary);
-        employees.add(employee);
+    private List<Employee> employeeList =
+            new ArrayList<>();
 
-    }
-    public void writeEmployeeData()
-    {
-       System.out.println("Employee PayRoll data:");
-       employees.forEach(System.out::println);
-    }
-    public void readFile()
+    public void addEmployee(
+            Employee employee) {
 
-            throws Exception {
-
-        Files.lines(
-
-                        Paths.get(
-                                "EmployeeData/payroll.txt"
-                        )
-                )
-
-                .map(
-
-                        line -> line.split("\\|")
-                )
-
-                .forEach(
-
-                        data -> System.out.println(
-
-                                "Name : "
-
-                                        +
-
-                                        data[1]
-                        )
-                );
+        employeeList.add(employee);
     }
 
+    public void writeEmployeePayrollToConsole() {
 
-    public void writeToFile()
+        System.out.println(
+                "Employee Payroll Data"
+        );
+
+        employeeList.forEach(
+                System.out::println
+        );
+    }
+
+    public void writeEmployeePayrollToFile(
+            String fileName)
 
             throws IOException {
 
-        FileWriter writer =
+        Files.write(
 
-                new FileWriter(
-                        "EmployeeData/payroll.txt"
-                );
+                Paths.get(fileName),
 
-        for (EmployeePayroll emp
-                : employees) {
-
-            writer.write(
-
-                    emp.toString()
-
-                            +
-
-                            System.lineSeparator()
-            );
-        }
-
-        writer.close();
+                employeeList
+                        .stream()
+                        .map(Employee::toString)
+                        .toList()
+        );
     }
 
-    public void printData()
+    public long countEntries(
+            String fileName)
 
-            throws Exception {
-
-        Files.lines(
-
-                        Paths.get(
-                                "EmployeeData/payroll.txt"
-                        )
-                )
-
-                .forEach(
-                        System.out::println
-                );
-    }
-    public long countEntries()
-
-            throws Exception {
+            throws IOException {
 
         return Files.lines(
 
-                        Paths.get(
-                                "EmployeeData/payroll.txt"
-                        )
-                )
+                Paths.get(fileName)
+        ).count();
+    }
 
-                .count();
+    public void printPayrollFile(
+            String fileName)
 
+            throws IOException {
+
+        Files.lines(
+
+                Paths.get(fileName)
+        ).forEach(
+                System.out::println
+        );
+    }
+
+    public List<String> readPayrollFile(
+            String fileName)
+
+            throws IOException {
+
+        return Files.readAllLines(
+                Paths.get(fileName)
+        );
     }
 
 }
