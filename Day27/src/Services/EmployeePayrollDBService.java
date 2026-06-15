@@ -1,7 +1,12 @@
 package Services;
+import Entities.Employee;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeePayrollDBService {
+
 
     private static final String URL =
             "jdbc:mysql://localhost:3306/payroll_service";
@@ -59,41 +64,26 @@ public class EmployeePayrollDBService {
 
     // READ ALL
 
-    public void displayEmployees() {
+    public List<Employee> displayEmployees() {
+        List<Employee> emp = new ArrayList<>();
+        String query = "select * from employee_payroll";
 
-        String query =
-                "SELECT * FROM employee_payroll";
-
-        try(Connection connection = getConnection();
-            PreparedStatement statement =
-                    connection.prepareStatement(query);
-            ResultSet rs =
-                    statement.executeQuery()) {
-
-            while(rs.next()) {
-
-                System.out.println(
-
-                        rs.getInt("id")
-                                + " | " +
-
-                                rs.getString("name")
-                                + " | " +
-
-                                rs.getString("gender")
-                                + " | " +
-
-                                rs.getDouble("salary")
-                                + " | " +
-
-                                rs.getDate("start")
-                );
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query);
+             ResultSet rs = statement.executeQuery();
+        ){
+            while (rs.next())
+            {
+                emp.add(new Employee( rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getDouble("salary")));
             }
 
         } catch(Exception e) {
-
             e.printStackTrace();
         }
+        return  emp;
+
     }
 
     // READ BY NAME
