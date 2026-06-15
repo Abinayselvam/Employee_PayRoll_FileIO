@@ -88,7 +88,7 @@ public class EmployeePayrollDBService {
 
     // READ BY NAME
 
-    public void getEmployeeByName(
+    public Employee getEmployeeByName(
             String employeeName) {
 
         String query =
@@ -126,6 +126,7 @@ public class EmployeePayrollDBService {
 
             e.printStackTrace();
         }
+        return null;
     }
 
     // UPDATE SALARY
@@ -282,5 +283,15 @@ public class EmployeePayrollDBService {
 
             e.printStackTrace();
         }
+    }
+    public boolean checkEmployeeInSync(
+            String name,
+            double salary)
+    {
+        Employee employee =
+                getEmployeeByName(name);
+
+        return employee != null &&
+                employee.getSalary() == salary;
     }
 }

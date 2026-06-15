@@ -1,3 +1,4 @@
+import Entities.Employee;
 import Services.EmployeePayrollDBService;
 
 import java.sql.*;
@@ -21,6 +22,7 @@ public static void main(String[] args)
             "Abi",
             60000
     );
+    service.checkEmployeeInSync("Abi",60000);
 
     service.getEmployeeByName(
             "Abi"
@@ -31,7 +33,6 @@ public static void main(String[] args)
     service.deleteEmployee(
             "Abi"
     );
-
 }
 
 }
